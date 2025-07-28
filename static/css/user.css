@@ -1,0 +1,21 @@
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.check-icon {
+    font-size: 100px;
+    color: #28a745;
+}

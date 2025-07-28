@@ -1,0 +1,70 @@
+{{define "productRows"}}
+    {{range $index, $product := .Products}}
+        <tr>
+            {{/*<td>{{$index}}</td>*/}}
+            <td style="width: 100px">{{$product.Name}}</td>
+            <td>{{$product.Description}}</td>
+            <td>${{printf "%.2f" $product.Price}}</td>
+
+            <td style="width: 200px;">
+                <button class="btn btn-primary"
+                        hx-get="/product/{{$product.ID}}"
+                        hx-target="#productPagesContainer"
+                        title="show details">
+                    <i class="fa-solid fa-eye"></i>
+                </button>
+                <button class="btn btn-success"
+                        hx-get="/product/{{$product.ID}}/edit"
+                        hx-target="#productPagesContainer"
+                        title="edit product">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="btn btn-danger"
+                        hx-delete="/product/{{$product.ID}}"
+                        hx-target="#productPagesContainer"
+                        hx-confirm="Are you sure want to delete '{{$product.Name}}'?"
+                        hx-indicator="#loadingIndicator"
+                        title="delete product">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+    {{end}}
+
+    <div class="pagination">
+        <li>
+            <a hx-get="/products?page=1&size={{.Size}}" hx-target="#tableBody"
+                    {{if eq .CurrentPage 1}} class="disabled" {{end}}>
+                First
+            </a>
+        </li>
+        <li>
+            <a hx-get="/products?page={{.PreviousPage}}&size={{.Size}}" hx-target="#tableBody"
+                    {{if eq .CurrentPage 1}} class="disabled" {{end}}>
+                Previous
+            </a>
+        </li>
+
+        {{range $i := .PageRange}}
+            <li>
+                <a hx-get="/products?page={{$i}}&size={{$.Size}}" hx-target="#tableBody"
+                        {{if eq $i $.CurrentPage}} class="active"{{end}}>
+                    {{$i}}
+                </a>
+            </li>
+        {{end}}
+
+        <li>
+            <a hx-get="/products?page={{.NextPage}}&size={{.Size}}" hx-target="#tableBody"
+                    {{if eq .CurrentPage .TotalPages}} class="disabled" {{end}}>
+                Next
+            </a>
+        </li>
+        <li>
+            <a hx-get="/products?page={{.TotalPages}}&size={{.Size}}" hx-target="#tableBody"
+                    {{if eq .CurrentPage .TotalPages}} class="disabled" {{end}}>
+                Last
+            </a>
+        </li>
+    </div>
+{{end}}

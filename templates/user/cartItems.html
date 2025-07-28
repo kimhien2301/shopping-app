@@ -1,0 +1,48 @@
+{{define "cartItems"}}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Your Cart</h5>
+            {{if .Message}}
+                <div class="alert alert-{{.AlertType}} alert-dismissible fade show" role="alert">
+                    {{.Message}}
+                </div>
+                <script>
+                    setTimeout(function () {
+                        const alertElement = document.querySelector('.alert');
+                        if (alertElement) {
+                            // alertElement.classList.remove('show');
+                            alertElement.remove();
+                        }
+                    }, 10000);
+                </script>
+            {{end}}
+
+            {{if .Items}}
+                {{range .Items}}
+                    <div class="cart-item">
+                        <span>{{.Product.Name}}</span>
+                        <span class="badge bg-primary rounded-pill">{{.Quantity}}</span>
+                    </div>
+                {{end}}
+
+                <div class="cart-item">
+                    <b>Total:</b> ${{printf "%.2f" .TotalCost}}
+                </div>
+            {{else}}
+                <p>Your cart is empty</p>
+            {{end}}
+        </div>
+    </div>
+
+    {{if .Items}}
+        <div style="display: none;">
+            {{/*            <div class="row">*/}}
+            <div id="placeOrderButton" class="col" hx-swap-oob="true">
+                <button class="btn btn-primary w-100 mt-3" hx-get="/shopping-cart" hx-target="#mainShoppingSection">
+                    Go to Cart
+                </button>
+            </div>
+            {{/*            </div>*/}}
+        </div>
+    {{end}}
+{{end}}

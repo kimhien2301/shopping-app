@@ -1,0 +1,56 @@
+{{define "orderTableRows"}}
+    {{range $index, $order := .Orders}}
+        <tr>
+            <td>{{$order.UserID}}</td>
+            <td>{{$order.Status}}</td>
+            <td>{{$order.Date.Format "2006-01-01"}}</td>
+            <td>${{printf "%.2f" $order.Total}}</td>
+
+            <td style="width: 200px;">
+                <button class="btn btn-primary"
+                        hx-get="/order/{{$order.ID}}"
+                        hx-target="#orderPagesContainer"
+                        title="show order items">
+                    <i class="fa-solid fa-eye"></i>
+                </button>
+            </td>
+        </tr>
+    {{end}}
+
+    <div class="pagination">
+        <li>
+            <a hx-get="/orders?page=1&size={{.Size}}" hx-target="#tableBody"
+                    {{if eq .CurrentPage 1}} class="disabled" {{end}}>
+                First
+            </a>
+        </li>
+        <li>
+            <a hx-get="/orders?page={{.PreviousPage}}&size={{.Size}}" hx-target="#tableBody"
+                    {{if eq .CurrentPage 1}} class="disabled" {{end}}>
+                Previous
+            </a>
+        </li>
+
+        {{range $i := .PageRange}}
+            <li>
+                <a hx-get="/orders?page={{$i}}&size={{$.Size}}" hx-target="#tableBody"
+                        {{if eq $i $.CurrentPage}} class="active"{{end}}>
+                    {{$i}}
+                </a>
+            </li>
+        {{end}}
+
+        <li>
+            <a hx-get="/orders?page={{.NextPage}}&size={{.Size}}" hx-target="#tableBody"
+                    {{if eq .CurrentPage .TotalPages}} class="disabled" {{end}}>
+                Next
+            </a>
+        </li>
+        <li>
+            <a hx-get="/orders?page={{.TotalPages}}&size={{.Size}}" hx-target="#tableBody"
+                    {{if eq .CurrentPage .TotalPages}} class="disabled" {{end}}>
+                Last
+            </a>
+        </li>
+    </div>
+{{end}}

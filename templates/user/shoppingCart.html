@@ -1,0 +1,54 @@
+{{define "shoppingCart"}}
+    <div class="col-md-9 mt-3">
+        {{range .}}
+            <div class="row">
+                <div class="col">
+                    <div class="card mb-4">
+                        <img class="card-img-top" src="/static/uploads/{{.Product.Image}}" alt="{{.Product.Name}}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{.Product.Name}}</h5>
+                            <p class="card-text">${{.Product.Price}}</p>
+                            <p class="card-text">
+                                <small class="text-muted">{{.Product.Description}}</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row mb-2">
+                        <div class="col-md-4 d-grid">
+                            <button type="button" class="btn btn-primary btn-block"
+                                    hx-put="/cart/{{.ProductID}}?action=add"
+                                    hx-target="#shoppingCartItems"> +
+                            </button>
+                        </div>
+                        <div class="col-md-4">&nbsp;</div>
+                        <div class="col-md-4 d-grid">
+                            <button type="button" class="btn btn-warning btn-block"
+                                    hx-put="/cart/{{.ProductID}}?action=subtract"
+                                    hx-target="#shoppingCartItems"> -
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-danger btn-block"
+                                    hx-put="/cart/{{.ProductID}}?action=remove"
+                                    hx-target="#shoppingCartItems">
+                                Remove Product
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{end}}
+    </div>
+
+    <div style="display: none;">
+        <div id="placeOrderButton" class="col" hx-swap-oob="true">
+            <a href="/order-complete" class="btn btn-success w-100 mt-3">
+                Place Order
+            </a>
+        </div>
+    </div>
+{{end}}

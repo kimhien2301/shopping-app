@@ -1,0 +1,49 @@
+{{define "createProduct"}}
+    <div class="card-header">
+        <i class="fa-solid fa-circle-plus me-1"></i>
+        Add New Product
+    </div>
+
+    <div class="card-body">
+        <form id="editProductForm" novalidate>
+            <div id="errors"></div>
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" required id="name" name="name" placeholder="Enter Product Name">
+            </div>
+
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" class="form-control" required id="price" name="price"
+                       placeholder="Enter Product Price">
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" rows="2" required id="description" name="description"
+                          placeholder="Product Description"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="image" class="form-label">Product Image</label>
+                <input type="file" class="form-control" id="image" name="image">
+            </div>
+
+            <button type="submit" class="btn btn-primary"
+                    hx-encoding="multipart/form-data" hx-post="/product" hx-target="#errors"
+                    hx-indicator="#loadingIndicator">
+                Create
+            </button>
+        </form>
+    </div>
+
+    <div style="display: none">
+        <div id="pageActionButton" hx-swap-oob="true">
+            <button class="btn btn-primary mt-2" type="button"
+                    hx-get="/all-products" hx-target="#productPagesContainer">
+                All Products
+            </button>
+        </div>
+    </div>
+{{end}}

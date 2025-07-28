@@ -1,0 +1,69 @@
+{{define "orderDetail"}}
+    <div class="card-header">
+        <i class="fas fa-info-circle me-1" aria-hidden="true"></i>
+        Order detail
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Cost</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{range $index, $item := .Order.Items}}
+                        <tr>
+                            <td>{{$item.Product.Name}}</td>
+                            <td>{{$item.Quantity}}</td>
+                            <td>${{printf "%.2f" $item.Product.Price}}</td>
+                            <td>${{printf "%.2f" $item.Cost}}</td>
+                        </tr>
+                    {{end}}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                        <td><strong>${{printf "%.2f" .Order.Total}}</strong></td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-4" id="updateOrderStatusForm">
+            <form class="mt-3 me-2">
+                <div class="form-group">
+                    <label for="orderStatus" class="form-label">
+                        Update Order Status:
+                    </label>
+                    <select name="order_status" id="orderStatus" class="form-control">
+                        {{ $currentStt := .Order.Status}}
+                        {{range $index, $opt := .StatusOptions}}
+                            <option {{if eq $currentStt $opt}} selected {{end}}>{{$opt}}</option>
+                        {{end}}
+                    </select>
+                </div>
+                <div class="mt-2">
+                    <button class="btn btn-primary" hx-put="/order/{{.Order.ID}}" hx-target="#orderPagesContainer">
+                        Update
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div style="display: none">
+        <div id="pageActionButton" hx-swap-oob="true">
+            <button class="btn btn-primary mt-2" type="button"
+                    hx-get="/order-table" hx-target="#orderPagesContainer">
+                All Orders
+            </button>
+        </div>
+    </div>
+{{end}}

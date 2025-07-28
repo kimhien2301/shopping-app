@@ -1,0 +1,48 @@
+{{define "editProduct"}}
+    <div class="card-header">
+        <i class="fa-solid fa-pencil-square me-1"></i>
+        Edit Product
+    </div>
+
+    <div class="card-body">
+        <form id="editProductForm" novalidate>
+            <div id="errors"></div>
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" required id="name" name="name" value="{{.Name}}">
+            </div>
+
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" class="form-control" required id="price" name="price" value="{{.Price}}">
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" rows="2" required id="description"
+                          name="description">{{.Description}}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="image" class="form-label">Product Image</label>
+                <input type="file" class="form-control" id="image" name="image" value="{{.Image}}">
+            </div>
+
+            <button type="submit" class="btn btn-primary"
+                    hx-encoding="multipart/form-data" hx-put="/product/{{.ID}}" hx-target="#errors"
+                    hx-indicator="#loadingIndicator">
+                Save Change
+            </button>
+        </form>
+    </div>
+
+    <div style="display: none">
+        <div id="pageActionButton" hx-swap-oob="true">
+            <button class="btn btn-primary mt-2" type="button"
+                    hx-get="/all-products" hx-target="#productPagesContainer">
+                All Products
+            </button>
+        </div>
+    </div>
+{{end}}

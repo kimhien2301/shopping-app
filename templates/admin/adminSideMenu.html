@@ -1,0 +1,39 @@
+{{define "adminSidemenu"}}
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <div class="sb-sidenav-menu-heading">Home</div>
+                    <a class="nav-link" href="#">
+                        <div class="sb-nav-link-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        Dashboard
+                    </a>
+
+                    <div class="sb-sidenav-menu-heading">Pages</div>
+                    <a href="/manage-products" class="nav-link">
+                        <div class="sb-nav-link-icon">
+                            <i class="fa-solid fa-list"></i>
+                        </div>
+                        All Products
+                    </a>
+
+                    <a href="/manage-orders" class="nav-link">
+                        <div class="sb-nav-link-icon">
+                            <i class="fa-solid fa-cart-arrow-down"></i>
+                        </div>
+                        All Orders
+                    </a>
+                </div>
+            </div>
+            <div class="sb-sidenav-footer">
+                <div class="text-muted">Copyright &copy; Your Website 2024</div>
+                <div><a href="#">Privacy Policy</a></div>
+                <div><a href="#">Terms &amp; Conditions</a></div>
+            </div>
+        </nav>
+    </div>
+
+    <div id="layoutSidenav_content">
+{{end}}
