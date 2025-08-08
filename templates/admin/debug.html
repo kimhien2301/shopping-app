@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Shopping Site - Admin</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
+    <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/js/all.js"
+            integrity="sha512-uNrBiKhFm8UOf0IXqkeojIesJ5glWJt8+epL5xwBBe1J9tcmd54f/vwQ6+g2ahXBHuayqaQcelUK7CULdWHinQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body class="sb-nav-fixed">
+
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+
+        <a class="navbar-brand ps-3" href="index.html">Store Admin</a>
+
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for..."
+                       aria-describedby="btnNavbarSearch"/>
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle"
+                   id="navbarDropdown"
+                   href="#"
+                   role="button"
+                   data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <i class="fas fa-user fa-fw"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li>
+                        <hr class="dropdown-divider"/>
+                    </li>
+                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Home</div>
+                        <a class="nav-link" href="#">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            Dashboard
+                        </a>
+
+                        <div class="sb-sidenav-menu-heading">Pages</div>
+                        <a href="/manage-products" class="nav-link">
+                            <div class="sb-nav-link-icon">
+                                <i class="fa-solid fa-list"></i>
+                            </div>
+                            All Products
+                        </a>
+
+                        <a href="/manage-orders" class="nav-link">
+                            <div class="sb-nav-link-icon">
+                                <i class="fa-solid fa-cart-arrow-down"></i>
+                            </div>
+                            All Orders
+                        </a>
+                    </div>
+                </div>
+
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Manage Products</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item">Dashboard</li>
+                        <li class="breadcrumb-item active">Products</li>
+                    </ol>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            This is where you can manage all products in your inventory. You can view, update and
+                            navigate
+                            between products. You can also use the button below to add a new product.
+                            <br>
+                            <div id="pageActionButton">
+                                <button hx-get="/create-product" hx-target="#productPagesContainer"
+                                        type="button" class="btn btn-success mt-2">
+                                    Add Product
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card mb-4" id="productPagesContainer">
+
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            All Products
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Price</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tableBody" hx-get="/products" hx-trigger="load"
+                                       hx-indicator="#loadingIndicator"></tbody>
+                            </table>
+                        </div>
+
+
+                        <div style="display: none;">
+                            <div id="pageActionButton" hx-swap-oob="true">
+                                <button class="btn btn-success mt-2" type="button"
+                                        hx-get="/create-product" hx-target="#productPagesContainer">
+                                    Add Product
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+
+
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Your Website 2024</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <div class="loading-indicator htmx-indicator" id="loadingIndicator">
+        <div class="loading-text">Processing...</div>
+    </div>
+
+    <script src="/static/js/bootstrap.bundle.min.js" defer></script>
+
+</body>
+</html>
+

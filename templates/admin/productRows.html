@@ -2,7 +2,7 @@
     {{range $index, $product := .Products}}
         <tr>
             {{/*<td>{{$index}}</td>*/}}
-            <td style="width: 100px">{{$product.Name}}</td>
+            <td>{{$product.Name}}</td>
             <td>{{$product.Description}}</td>
             <td>${{printf "%.2f" $product.Price}}</td>
 
@@ -31,40 +31,81 @@
         </tr>
     {{end}}
 
-    <div class="pagination">
+    {{/*<div class="pagination">
         <li>
-            <a hx-get="/products?page=1&size={{.Size}}" hx-target="#tableBody"
-                    {{if eq .CurrentPage 1}} class="disabled" {{end}}>
-                First
-            </a>
+            <a hx-get="/products?page=1&size={{.Size}}"
+               hx-target="#tableBody"
+                    {{if eq .CurrentPage 1}} class="disabled" {{end}}
+            > First </a>
         </li>
         <li>
-            <a hx-get="/products?page={{.PreviousPage}}&size={{.Size}}" hx-target="#tableBody"
-                    {{if eq .CurrentPage 1}} class="disabled" {{end}}>
-                Previous
-            </a>
+            <a hx-get="/products?page={{.PreviousPage}}&size={{.Size}}"
+               hx-target="#tableBody"
+                    {{if eq .CurrentPage 1}} class="disabled" {{end}}
+            > Previous </a>
         </li>
 
         {{range $i := .PageRange}}
             <li>
-                <a hx-get="/products?page={{$i}}&size={{$.Size}}" hx-target="#tableBody"
-                        {{if eq $i $.CurrentPage}} class="active"{{end}}>
-                    {{$i}}
-                </a>
+                <a hx-get="/products?page={{$i}}&size={{$.Size}}"
+                   hx-target="#tableBody"
+                        {{if eq $i $.CurrentPage}} class="active disabled"{{end}}
+                > {{$i}} </a>
             </li>
         {{end}}
 
         <li>
-            <a hx-get="/products?page={{.NextPage}}&size={{.Size}}" hx-target="#tableBody"
-                    {{if eq .CurrentPage .TotalPages}} class="disabled" {{end}}>
-                Next
-            </a>
+            <a hx-get="/products?page={{.NextPage}}&size={{.Size}}"
+               hx-target="#tableBody"
+                    {{if eq .CurrentPage .TotalPages}} class="disabled" {{end}}
+            > Next </a>
         </li>
         <li>
-            <a hx-get="/products?page={{.TotalPages}}&size={{.Size}}" hx-target="#tableBody"
-                    {{if eq .CurrentPage .TotalPages}} class="disabled" {{end}}>
-                Last
-            </a>
+            <a hx-get="/products?page={{.TotalPages}}&size={{.Size}}"
+               hx-target="#tableBody"
+                    {{if eq .CurrentPage .TotalPages}} class="disabled" {{end}}
+            > Last </a>
         </li>
-    </div>
+    </div>*/}}
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item {{if eq .CurrentPage 1}} disabled {{end}}">
+                <a class="page-link"
+                   hx-get="/products?page=1&size={{.Size}}"
+                   hx-target="#tableBody"
+                >First</a>
+            </li>
+
+            <li class="page-item {{if eq .CurrentPage 1}} disabled {{end}}">
+                <a class="page-link"
+                   hx-get="/products?page={{.PreviousPage}}&size={{.Size}}"
+                   hx-target="#tableBody"
+                >Previous</a>
+            </li>
+
+            {{range $i := .PageRange}}
+                <li class="page-item {{if eq $i $.CurrentPage}} active disabled {{end}}">
+                    <a class="page-link"
+                       hx-get="/products?page={{$i}}&size={{$.Size}}"
+                       hx-target="#tableBody"
+                    >{{$i}}</a>
+                </li>
+            {{end}}
+
+            <li class="page-item {{if eq .CurrentPage .TotalPages}} disabled {{end}}">
+                <a class="page-link"
+                   hx-get="/products?page={{.NextPage}}&size={{.Size}}"
+                   hx-target="#tableBody"
+                >Next</a>
+            </li>
+
+            <li class="page-item {{if eq .CurrentPage .TotalPages}} disabled {{end}}">
+                <a a class="page-link"
+                   hx-get="/products?page={{.TotalPages}}&size={{.Size}}"
+                   hx-target="#tableBody"
+                >Last</a>
+            </li>
+        </ul>
+    </nav>
 {{end}}

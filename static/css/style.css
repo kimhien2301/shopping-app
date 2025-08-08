@@ -13480,6 +13480,7 @@ html, body {
 
 #layoutSidenav {
     display: flex;
+    height: 100%;
 }
 
 #layoutSidenav #layoutSidenav_nav {
